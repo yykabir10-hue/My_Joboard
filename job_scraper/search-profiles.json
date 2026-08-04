@@ -1,0 +1,67 @@
+{
+  "version": 1,
+
+  "_comment": [
+    "Executable config for tools/run_scrape.py. search-queries.md stays the strategy",
+    "doc; this file is what cron actually runs.",
+    "",
+    "defaults.portals is the automation backbone: arbeitsagentur (official federal",
+    "API), arbeitnow, and freehire are all public JSON APIs, safe to poll daily.",
+    "stepstone/xing/linkedin are HTML-scraped and two of them are personal-use-only",
+    "per their SKILL.md, so they are opted in per profile and kept low-volume.",
+    "",
+    "portals: '+name' adds to defaults, '-name' removes; a list with no prefixes",
+    "replaces defaults outright.",
+    "portal_overrides: per-portal spellings and facets. The same search is written",
+    "differently on each board - LinkedIn needs 'Berlin, Germany' where StepStone",
+    "needs 'Berlin', and freehire has no location flag at all (it takes --city).",
+    "Any key here that is not query/location/jobage/limit is passed through as",
+    "--key value, so portal-specific facets need no code change."
+  ],
+
+  "defaults": {
+    "jobage": 3,
+    "limit": 25,
+    "portals": ["arbeitsagentur-search", "arbeitnow-search", "freehire-search"]
+  },
+
+  "profiles": [
+    {
+      "id": "data-eng-berlin",
+      "enabled": true,
+      "query": "Data Engineer",
+      "location": "Berlin",
+      "portals": ["+stepstone-search", "+xing-search"],
+      "portal_overrides": {
+        "linkedin-search": { "location": "Berlin, Germany" },
+        "freehire-search": { "country": "DE", "category": "ml_ai" },
+        "arbeitsagentur-search": { "radius": 30 }
+      },
+      "exclude_titles": ["werkstudent", "praktikum", "ausbildung", "duales studium"]
+    },
+    {
+      "id": "softwareentwickler-muenchen",
+      "enabled": true,
+      "query": "Softwareentwickler",
+      "location": "München",
+      "portals": ["+stepstone-search"],
+      "portal_overrides": {
+        "arbeitnow-search": { "query": "software" },
+        "freehire-search": { "country": "DE", "city": "Munich" },
+        "linkedin-search": { "location": "Munich, Bavaria, Germany" }
+      },
+      "exclude_titles": ["werkstudent", "praktikum", "ausbildung", "duales studium"]
+    },
+    {
+      "id": "remote-python",
+      "enabled": false,
+      "query": "Python",
+      "location": "Remote",
+      "portals": ["arbeitnow-search", "freehire-search"],
+      "portal_overrides": {
+        "freehire-search": { "region": "eu", "category": "backend" }
+      },
+      "exclude_titles": ["werkstudent", "praktikum"]
+    }
+  ]
+}
