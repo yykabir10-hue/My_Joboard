@@ -111,6 +111,32 @@ class BuildCommand(unittest.TestCase):
         self.assertEqual(command[command.index("--country") + 1], "DE")
         self.assertEqual(command[command.index("--category") + 1], "ml_ai")
 
+    def test_defaults_supply_portal_overrides(self):
+        # Written once in `defaults` rather than repeated on every profile.
+        defaults = dict(self.defaults,
+                        portal_overrides={"freehire-search": {"country": "DE"}})
+        command = run_scrape.build_command(
+            "freehire-search", {"id": "p", "query": "x"}, defaults)
+        self.assertEqual(command[command.index("--country") + 1], "DE")
+
+    def test_profile_override_beats_the_default_override(self):
+        defaults = dict(self.defaults,
+                        portal_overrides={"freehire-search": {"country": "DE"}})
+        command = run_scrape.build_command(
+            "freehire-search",
+            {"id": "p", "query": "x",
+             "portal_overrides": {"freehire-search": {"country": "AT"}}},
+            defaults)
+        self.assertEqual(command.count("--country"), 1)
+        self.assertEqual(command[command.index("--country") + 1], "AT")
+
+    def test_default_override_satisfies_a_required_location(self):
+        command = run_scrape.build_command(
+            "linkedin-search", {"id": "p", "query": "x"},
+            dict(self.defaults,
+                 portal_overrides={"linkedin-search": {"location": "Germany"}}))
+        self.assertEqual(command[command.index("--location") + 1], "Germany")
+
     def test_override_colliding_with_a_mapped_flag_is_not_emitted_twice(self):
         # freehire's location flag IS --city, so a profile location plus a
         # {"city": ...} override used to emit --city twice.
@@ -308,10 +334,19 @@ class Cli(unittest.TestCase):
         self.assertIn("no config at", result.stderr)
 
     def test_dry_run_prints_commands(self):
-        result = self.run_cli("--dry-run", "--profile", "data-eng-berlin")
+        # Read the id from the shipped config rather than hardcoding one - the
+        # profile set changes whenever the search does.
+        first = run_scrape.load_config(run_scrape.DEFAULT_CONFIG)["profiles"][0]["id"]
+        result = self.run_cli("--dry-run", "--profile", first)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("bun run", result.stdout)
         self.assertIn("--query", result.stdout)
+
+    def test_unknown_profile_id_is_an_error_not_a_silent_no_op(self):
+        result = self.run_cli("--dry-run", "--profile", "does-not-exist")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("no profile with id", result.stderr)
+        self.assertIn("Available:", result.stderr)
 
     def test_dry_run_over_the_shipped_config_survives_disabled_profiles(self):
         # A disabled-profile report entry carries no portal; the printer used

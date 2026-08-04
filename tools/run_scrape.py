@@ -176,7 +176,11 @@ def build_command(portal, profile, defaults):
             f"(and a SKILL.md-drift test case) before using it in a profile"
         )
 
-    overrides = dict((profile.get("portal_overrides") or {}).get(portal, {}))
+    # Defaults first, then the profile's own - so a facet that every profile
+    # needs (freehire's --country, linkedin's required location) is written once
+    # in `defaults`, and a profile can still override any single key.
+    overrides = dict((defaults.get("portal_overrides") or {}).get(portal, {}))
+    overrides.update((profile.get("portal_overrides") or {}).get(portal, {}))
     values = {
         "query": overrides.pop("query", profile.get("query")),
         "location": overrides.pop("location", profile.get("location")),
@@ -257,6 +261,15 @@ def excluded(title, terms):
 def run(config, only=None, dry_run=False, timeout=120):
     defaults = config.get("defaults", {})
     records, report = [], []
+
+    if only is not None:
+        known = [p.get("id") for p in config["profiles"]]
+        if only not in known:
+            # Silently scraping nothing because of a typo'd profile name is the
+            # kind of failure a cron job hides for weeks.
+            raise ConfigError(
+                f"no profile with id {only!r}. Available: " + ", ".join(sorted(known))
+            )
 
     for profile in config["profiles"]:
         if only and profile["id"] != only:

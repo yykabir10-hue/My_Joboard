@@ -2,66 +2,68 @@
   "version": 1,
 
   "_comment": [
-    "Executable config for tools/run_scrape.py. search-queries.md stays the strategy",
-    "doc; this file is what cron actually runs.",
+    "Process / chemical engineering job search, Germany-wide.",
     "",
-    "defaults.portals is the automation backbone: arbeitsagentur (official federal",
-    "API), arbeitnow, and freehire are all public JSON APIs, safe to poll daily.",
-    "stepstone/xing/linkedin are HTML-scraped and two of them are personal-use-only",
-    "per their SKILL.md, so they are opted in per profile and kept low-volume.",
+    "Query terms come from json_tag.txt (2026-08-04): every tag there was lifted",
+    "from a live German posting rather than invented, so these are the phrasings",
+    "employers actually use.",
     "",
-    "portals: '+name' adds to defaults, '-name' removes; a list with no prefixes",
-    "replaces defaults outright.",
-    "portal_overrides: per-portal spellings and facets. The same search is written",
-    "differently on each board - LinkedIn needs 'Berlin, Germany' where StepStone",
-    "needs 'Berlin', and freehire has no location flag at all (it takes --city).",
-    "Any key here that is not query/location/jobage/limit is passed through as",
-    "--key value, so portal-specific facets need no code change."
+    "PORTALS. defaults hold the three that measurably carry this field:",
+    "arbeitsagentur (official federal API, all sectors - the backbone), stepstone,",
+    "and freehire. arbeitnow is deliberately absent: probed with",
+    "'Verfahrensingenieur', 'Process Engineer' and 'Werkstudent Verfahrenstechnik'",
+    "it returned 0 results every time - it is a tech/remote board and carries",
+    "nothing for this field. xing and linkedin are personal-use-only per their",
+    "SKILL.md, so they are opted into the four core title profiles only, to keep",
+    "request volume low rather than firing on all twelve.",
+    "",
+    "NO exclude_titles. Werkstudent, Praktikum and Abschlussarbeit roles are",
+    "TARGETS here (tag categories 2 and 3), not noise. Over-filtering hides real",
+    "jobs; under-filtering only adds a row you can skim past.",
+    "",
+    "LOCATION is intentionally unset = nationwide. The source postings span",
+    "Frankfurt, Berlin, Essen, Hamburg, Leverkusen and Landau, so pinning one city",
+    "would cut most of them. The two portals that need an explicit scope get it",
+    "once in defaults.portal_overrides: linkedin requires a location string, and",
+    "freehire is worldwide unless given --country."
   ],
 
   "defaults": {
-    "jobage": 3,
+    "jobage": 7,
     "limit": 25,
-    "portals": ["arbeitsagentur-search", "arbeitnow-search", "freehire-search"]
+    "portals": ["arbeitsagentur-search", "stepstone-search", "freehire-search"],
+    "portal_overrides": {
+      "freehire-search": { "country": "DE" },
+      "linkedin-search": { "location": "Germany" }
+    }
   },
 
   "profiles": [
-    {
-      "id": "data-eng-berlin",
-      "enabled": true,
-      "query": "Data Engineer",
-      "location": "Berlin",
-      "portals": ["+stepstone-search", "+xing-search"],
-      "portal_overrides": {
-        "linkedin-search": { "location": "Berlin, Germany" },
-        "freehire-search": { "country": "DE", "category": "ml_ai" },
-        "arbeitsagentur-search": { "radius": 30 }
-      },
-      "exclude_titles": ["werkstudent", "praktikum", "ausbildung", "duales studium"]
-    },
-    {
-      "id": "softwareentwickler-muenchen",
-      "enabled": true,
-      "query": "Softwareentwickler",
-      "location": "München",
-      "portals": ["+stepstone-search"],
-      "portal_overrides": {
-        "arbeitnow-search": { "query": "software" },
-        "freehire-search": { "country": "DE", "city": "Munich" },
-        "linkedin-search": { "location": "Munich, Bavaria, Germany" }
-      },
-      "exclude_titles": ["werkstudent", "praktikum", "ausbildung", "duales studium"]
-    },
-    {
-      "id": "remote-python",
-      "enabled": false,
-      "query": "Python",
-      "location": "Remote",
-      "portals": ["arbeitnow-search", "freehire-search"],
-      "portal_overrides": {
-        "freehire-search": { "region": "eu", "category": "backend" }
-      },
-      "exclude_titles": ["werkstudent", "praktikum"]
-    }
+    { "id": "verfahrensingenieur",  "enabled": true, "query": "Verfahrensingenieur",
+      "portals": ["+xing-search", "+linkedin-search"] },
+
+    { "id": "prozessingenieur",     "enabled": true, "query": "Prozessingenieur",
+      "portals": ["+xing-search"] },
+
+    { "id": "chemieingenieur",      "enabled": true, "query": "Chemieingenieur",
+      "portals": ["+xing-search"] },
+
+    { "id": "process-engineer-en",  "enabled": true, "query": "Process Engineer",
+      "portals": ["+xing-search", "+linkedin-search"] },
+
+    { "id": "verfahrenstechnik-breit",         "enabled": true, "query": "Verfahrenstechnik" },
+    { "id": "prozesssimulation",               "enabled": true, "query": "Prozesssimulation" },
+    { "id": "werkstudent-verfahrenstechnik",   "enabled": true, "query": "Werkstudent Verfahrenstechnik" },
+    { "id": "praktikum-verfahrenstechnik",     "enabled": true, "query": "Praktikum Verfahrenstechnik" },
+    { "id": "werkstudent-energietechnik",      "enabled": true, "query": "Werkstudent Energietechnik" },
+    { "id": "biogas-gasaufbereitung",          "enabled": true, "query": "Biogasaufbereitung" },
+    { "id": "destillation-rektifikation",      "enabled": true, "query": "Destillation" },
+    { "id": "trenntechnik-waermetauscher",     "enabled": true, "query": "Trenntechnik" },
+
+    { "id": "chemical-engineer-en", "enabled": false, "query": "Chemical Engineer",
+      "_note": "English variant, overlaps heavily with process-engineer-en. Flip on for wider English coverage." },
+
+    { "id": "erneuerbare-energien", "enabled": false, "query": "Erneuerbare Energien",
+      "_note": "Broad energy-transition net: high volume, lower precision. Enable if the targeted energy profiles run dry." }
   ]
 }

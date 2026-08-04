@@ -16,16 +16,17 @@ profile, and drafts tailored CVs and cover letters.
 | Source | Mechanism | Notes |
 |---|---|---|
 | **arbeitsagentur** | Official federal API | **Primary source.** Germany's largest job database. Real server-side date filtering, full plain-text descriptions, and immune to markup changes |
-| **arbeitnow** | Public JSON API | Germany-focused tech and remote roles |
+| **stepstone** | HTML (SSR) | Strong general coverage. `search` works; `detail` is blocked upstream at the connection level |
 | **freehire** | Public JSON API | ~50 ATS platforms, faceted by skill/seniority/category |
-| **stepstone** | HTML (SSR) | `search` works; `detail` is blocked upstream at the connection level |
-| **xing** | HTML → schema.org JSON-LD | ⚠️ Personal use only |
-| **linkedin** | HTML | ⚠️ Personal use only |
+| **xing** | HTML → schema.org JSON-LD | ⚠️ Personal use only — opted into core profiles only |
+| **linkedin** | HTML | ⚠️ Personal use only — opted into core profiles only |
 | **Indeed** | MCP connector (`country_code: "DE"`) | Never scraped directly |
 | **Google** | `WebSearch` + `site:` queries | Fallback discovery; no Google Jobs scraper exists |
+| **arbeitnow** | Public JSON API | **Installed but unused.** Probed with `Verfahrensingenieur`, `Process Engineer` and `Werkstudent Verfahrenstechnik` it returned 0 results every time — a tech/remote board that carries nothing for process engineering |
 
-The three API-backed sources are the automation backbone — safe to poll daily. The
-HTML-scraped ones are opt-in per search profile and kept low-volume.
+`arbeitsagentur`, `stepstone` and `freehire` are the daily backbone. The two
+personal-use portals are opted in per profile rather than fired on every search,
+to keep request volume low.
 
 ---
 
@@ -72,16 +73,72 @@ python3 tools/run_scrape.py --out job_scraper/pools/$(date +%F).json --update-se
 ```
 
 `search-profiles.json` holds the searches. The key thing it encodes: **the same logical
-search is spelled differently on every portal** — LinkedIn needs `"Berlin, Germany"` where
-StepStone needs `"Berlin"`, and freehire has no location flag at all (it takes `--city`).
+search is spelled differently on every portal** — LinkedIn requires a location string where the others treat it as optional,
+and freehire has no location flag at all (it takes `--city`/`--country`).
 That lives in `portal_overrides`, not in a shell script.
 
 Deduplication is a separate tool you can run standalone:
 
 ```bash
-python3 tools/dedup_jobs.py merge arbeitsagentur-search=a.json xing-search=b.json
-python3 tools/dedup_jobs.py key --company "Bertrandt AG" --title "Data Engineer (m/w/d)"
+python3 tools/dedup_jobs.py merge arbeitsagentur-search=a.json stepstone-search=b.json
+python3 tools/dedup_jobs.py key --company "Sika Group" --title "Verfahrensingenieur (m/w/d)"
 ```
+
+---
+
+## Daily digest (cron)
+
+`tools/daily_run.sh` scrapes, deduplicates against everything seen before, and
+emails what's new. No model and no API key — just `bun`, `python3`, and SMTP.
+
+**1. Credentials.** Gmail needs an *app password* (2FA must be on); a normal
+account password is always rejected. Generate one at
+<https://myaccount.google.com/apppasswords>.
+
+```bash
+cp .env.example .env
+chmod 600 .env          # send_digest.py warns if others can read it
+$EDITOR .env
+```
+
+`.env` is gitignored, and that rule is pinned in `tools/security_guards.py` so it
+cannot be quietly removed later.
+
+**2. Test without sending.**
+
+```bash
+./tools/daily_run.sh --dry-run      # scrapes, renders, sends nothing
+```
+
+Writes `job_scraper/logs/<date>.html` — open it to see exactly what the mail
+looks like. Then send one for real:
+
+```bash
+python3 tools/send_digest.py job_scraper/pools/$(date +%F).json
+```
+
+**3. Schedule it.**
+
+```bash
+crontab -e
+30 7 * * *  /home/<you>/ai-job-search/tools/daily_run.sh
+```
+
+The script sets `PATH` explicitly rather than sourcing `~/.bashrc` — cron runs
+with a minimal environment, and a script that only works because of an
+interactive shell's PATH is one that passes your test and fails at 07:30. It
+also takes an `flock` so a slow run can never overlap the next one and race on
+`seen_jobs.json`, and prunes logs and pools older than 30 days.
+
+**On WSL:** cron only runs while WSL is running. This machine has `systemd=true`
+in `/etc/wsl.conf` and `cron` active, so it works once WSL is up. If you want it
+to survive a reboot without opening a terminal, add a Windows Task Scheduler
+entry at logon running `wsl.exe -d Ubuntu -- true` to start the VM.
+
+**What lands in your inbox:** new roles grouped by search profile, each linking
+to the posting, with `also on <portal>` where several boards carried the same
+job — plus a **Portal problems** block if any portal failed or timed out, since
+a silently broken scraper is the failure mode this pipeline is most exposed to.
 
 ---
 

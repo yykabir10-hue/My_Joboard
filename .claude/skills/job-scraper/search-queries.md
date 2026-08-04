@@ -4,7 +4,7 @@
 
 ## Installed portal CLIs (primary for `/scrape`)
 
-`/scrape` discovers every portal skill under `.agents/skills/*/SKILL.md` and runs its CLI first: `arbeitsagentur-search`, `arbeitnow-search`, `stepstone-search`, `xing-search`, plus the country-agnostic `linkedin-search` and `freehire-search` (both already cover Germany with no changes). Indeed is reached via a connected MCP tool instead of a CLI — see `job-scraper/SKILL.md` Step 1b.5. You do **not** need a matching `site:` line below for any of these to run.
+`/scrape` discovers every portal skill under `.agents/skills/*/SKILL.md` and runs its CLI first: `arbeitsagentur-search`, `stepstone-search`, `xing-search`, plus the country-agnostic `linkedin-search` and `freehire-search` (both already cover Germany with no changes). Indeed is reached via a connected MCP tool instead of a CLI — see `job-scraper/SKILL.md` Step 1b.5. You do **not** need a matching `site:` line below for any of these to run.
 
 **Prefer `arbeitsagentur-search` as the primary German source.** It is the federal employment agency's official API — the largest German job database, with genuine server-side date filtering and full plain-text descriptions — and unlike the HTML-scraping portals it cannot break from a markup change. Treat `stepstone-search`/`xing-search` as breadth on top of it, not as the backbone.
 
@@ -20,7 +20,7 @@ Primary (German job boards, all covered by an installed CLI or MCP tool — no `
 - **arbeitsagentur.de** - the federal employment agency's official job board, Germany's largest job database; `arbeitsagentur-search` CLI (official public API — **start here**)
 - **stepstone.de** - one of Germany's largest general job boards; `stepstone-search` CLI
 - **xing.com/jobs** - DACH professional network; `xing-search` CLI (personal-use only, see its SKILL.md)
-- **arbeitnow.com** - Germany-focused tech & remote job board with a free public API; `arbeitnow-search` CLI
+- **arbeitnow.com** - installed but **not used for this search**: probed with `Verfahrensingenieur`, `Process Engineer` and `Werkstudent Verfahrenstechnik` it returned 0 results every time. It is a tech/remote board and carries nothing for process engineering.
 - **linkedin.com/jobs** - filter to Germany / a German city; `linkedin-search` CLI (personal-use only)
 - **indeed.com/de** (or `de.indeed.com`) - reached via the connected Indeed MCP tool (`country_code: "DE"`), not a CLI — see `job-scraper/SKILL.md` Step 1b.5
 - **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field, e.g. `get-in-it.de` (IT), `honeypot.io` (tech) (optional — scaffold with `/add-portal`)
@@ -32,45 +32,49 @@ Secondary (company career pages / broad discovery via WebSearch):
 
 Queries are grouped by priority. Write **each category in every language from your Languages table** (see Language scope above). Combine each query with your location terms (e.g. your city, region, or metro area) where the site supports it.
 
-### Priority 1: [YOUR_PRIMARY_ROLE_TYPE]
+### Priority 1: Process / chemical engineering roles
 
-These match your strongest and most desired career direction. English and German variants — swap in your own title/skill/city:
-
-```
-site:stepstone.de "[YOUR_PRIMARY_JOB_TITLE]" [YOUR_CITY]
-site:xing.com/jobs "[YOUR_KEY_SKILL]" [YOUR_CITY]
-site:indeed.com/de "[YOUR_PRIMARY_JOB_TITLE]" [YOUR_CITY]
-site:linkedin.com/jobs "[YOUR_PRIMARY_JOB_TITLE]" Germany
-"[YOUR_PRIMARY_JOB_TITLE_DE]" Stellenangebote [YOUR_CITY]
-```
-
-### Priority 2: [YOUR_DOMAIN_EXPERTISE]
-
-These match your domain expertise.
+Core title phrasings, taken from live German postings (see `job_scraper/search-profiles.json`).
 
 ```
-site:[YOUR_JOB_BOARD] [YOUR_DOMAIN_KEYWORD_1] [YOUR_CITY] OR [YOUR_REGION]
-site:[YOUR_JOB_BOARD] [YOUR_DOMAIN_KEYWORD_2] [YOUR_COUNTRY]
-site:linkedin.com/jobs [YOUR_DOMAIN_KEYWORD_1] [YOUR_CITY] [YOUR_COUNTRY]
+site:stepstone.de "Verfahrensingenieur" OR "Prozessingenieur"
+site:xing.com/jobs "Chemieingenieur"
+site:indeed.com/de "Verfahrensingenieur (m/w/d)"
+site:linkedin.com/jobs "Process Engineer" Germany
+"Verfahrenstechniker" Stellenangebote Deutschland
 ```
 
-### Priority 3: [YOUR_ADJACENT_ROLE_TYPE]
-
-Adjacent roles you could pivot into.
+### Priority 2: Simulation and process design
 
 ```
-site:[YOUR_JOB_BOARD] "[YOUR_ADJACENT_TITLE_1]" [YOUR_KEY_SKILL] [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "[YOUR_ADJACENT_TITLE_2]" [YOUR_KEY_SKILL] [YOUR_CITY]
+"Prozesssimulation" OR "Process Simulation" Stellenangebote
+"Massen- und Energiebilanzen" Verfahrenstechnik
+"Aspen Plus" OR "Prozess-Simulationssoftware" Stellenangebote
+site:linkedin.com/jobs "Process Design & Optimization" Germany
 ```
 
-### Priority 4: Broader Technical / Consulting
+### Priority 3: Werkstudent / Praktikum / Abschlussarbeit
 
-Wider net for general technical roles.
+Student and thesis roles are targets, not noise - do **not** filter these out.
 
 ```
-site:[YOUR_JOB_BOARD] [YOUR_KEY_SKILL] developer [YOUR_CITY]
-site:linkedin.com/jobs "[YOUR_KEY_SKILL] developer" [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "technical consultant" [YOUR_DOMAIN] [YOUR_CITY]
+"Werkstudent Verfahrenstechnik" OR "Werkstudent*in Energietechnik"
+"Praktikum Verfahrenstechnik" OR "Pflichtpraktikum" Verfahrenstechnik
+"Praktikum/Abschlussarbeit" Verfahrenstechnik OR Energietechnik
+site:stepstone.de Werkstudent Verfahrenstechnik
+```
+
+### Priority 4: Domain specialisations
+
+Gas processing, thermal separation, and energy transition.
+
+```
+"Biogasaufbereitung" OR "Gasreinigungsanlagen" Stellenangebote
+"CO2-Verflüssigung" OR "Verfahrensfließbild" OR "R&I Fließbild"
+"Destillation" OR "Rektifikation" Verfahrensingenieur
+"Trenntechnik" OR "Wärmetauscher" OR "Lösungsmittelrückgewinnung"
+"HAZOP" OR "DGRL" OR "ATEX" OR "DVGW" OR "AD2000" Ingenieur
+"Erneuerbare Energien" OR "Energiewende" Ingenieur
 ```
 
 ## Location Filter

@@ -44,11 +44,16 @@ ALLOWED_PERMISSIONS = {
 # Personal-data ignore rules that must never disappear from .gitignore.
 REQUIRED_IGNORE_RULES = [
     "salary_data.json",
+    # SMTP app password for the daily digest (tools/send_digest.py).
+    ".env",
     # Depth-independent: the job-scraper skill resolves `job_scraper/` relative
     # to its own directory, so the state file lands under .claude/skills/... and
     # a repo-rooted rule silently fails to match it.
     "**/job_scraper/seen_jobs.json",
     "**/job_scraper/notion_sync.json",
+    # Daily-digest run logs and rendered previews carry scraped job data.
+    "**/job_scraper/pools/",
+    "**/job_scraper/logs/",
     "**/job_scraper/*.md",
     "*_BehavioralReport.pdf",
     "linkedin_Profile.pdf",

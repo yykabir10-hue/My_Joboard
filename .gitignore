@@ -18,6 +18,9 @@ venv/
 *.fls
 *.fdb_latexmk
 
+# SMTP app password for the daily digest
+.env
+
 # Personal data (never commit these)
 salary_data.json
 # Match at any depth: the job-scraper skill resolves `job_scraper/` relative to
@@ -26,6 +29,7 @@ salary_data.json
 **/job_scraper/seen_jobs.json
 **/job_scraper/notion_sync.json
 **/job_scraper/pools/
+**/job_scraper/logs/
 **/job_scraper/*.md
 *_BehavioralReport.pdf
 linkedin_Profile.pdf
