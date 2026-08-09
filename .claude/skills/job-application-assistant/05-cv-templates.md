@@ -116,11 +116,13 @@ When the role sits outside your home domain, **lead with the domain-transfer arg
 **Create 2-3 profile statement templates for your main role types:**
 
 <!-- SETUP: These are populated based on your background -->
-**For [YOUR_PRIMARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_1]
+**For Photonics / Optics / Laser Werkstudent roles:**
+> Physics graduate (Ahmadu Bello University, top 5% of cohort) currently pursuing a Master's degree in Germany, bringing hands-on research experience in electromagnetic radiation measurement - including designing and executing an independent SAR/power-density study from proposal through data collection to presentation. Two years of physics laboratory instruction translate directly into careful, safety-conscious bench work. Actively building toward a specialization in photonics/optics/laser technology and looking for a Werkstudent role to convert physics fundamentals into applied lab experience.
 
-**For [YOUR_SECONDARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_2]
+**For adjacent physics/engineering Werkstudent roles (metrology, semiconductor, quantum, general R&D):**
+> Physics graduate with a research background in electromagnetic measurement and two years of lab instruction experience, now pursuing a Master's degree in Germany. Comfortable moving between theoretical grounding and hands-on experimental work, with additional experience in electrical/electronic systems maintenance and inspection. Brings a demonstrated ability to self-direct a research project end-to-end (literature review, methodology, data analysis, presentation) and a track record of teaching and mentoring that supports clear technical communication in a team setting.
+
+<!-- Both statements avoid claiming direct photonics/optics/laser lab experience, which the CV does not yet show - see 04-job-evaluation.md's Technical Skills Match "Weak match areas" note. Lead with the physics-fundamentals/EM-measurement transfer argument instead of overstating domain fit. Revise once the Master's program/institution is confirmed, since that will likely strengthen the domain claim considerably. -->
 
 Statements labeled *[Used for: <company>_<role>]* were extracted from archived application drafts by `/setup` Path A. They are **phrasing references, never fact sources**: when drafting from one, every factual claim still comes from `01-candidate-profile.md` - a past tailored draft does not vouch for its own accuracy.
 

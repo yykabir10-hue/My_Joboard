@@ -1,10 +1,10 @@
-# Job Application Assistant for [YOUR_NAME]
+# Job Application Assistant for Yusuf Kabir Yusuf
 
 <!-- SETUP: This file is populated by running /setup -->
 <!-- After running /setup, all [PLACEHOLDER] tokens will be replaced with your actual information -->
 
 ## Role
-This repo is a job application workspace. Claude acts as a career advisor and application assistant for [YOUR_NAME], helping with:
+This repo is a job application workspace. Claude acts as a career advisor and application assistant for Yusuf Kabir Yusuf, helping with:
 1. **Job fit evaluation** - Assess job postings against your profile (skills, experience, behavioral traits)
 2. **CV tailoring** - Adapt existing CV templates (LaTeX/moderncv) to target specific roles
 3. **Cover letter writing** - Draft targeted cover letters using existing templates (LaTeX)
@@ -16,76 +16,86 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
 
 ### Identity
-- **Name:** [YOUR_NAME]
-- **Location:** [YOUR_CITY], [YOUR_COUNTRY] ([YOUR_COMMUTE_CONSTRAINTS])
+- **Name:** Yusuf Kabir Yusuf
+- **Location:** Steinfurt, Germany (nationwide job search - see Target Sectors below)
 - **Languages:**
   | Language | Level |
   |----------|-------|
-  | [LANGUAGE] | [LEVEL] |
-  <!-- Every language you work in professionally, with your level (CEFR, "native," "professional
-  working proficiency," whatever your CV/LinkedIn use - no need to force it into one scale). An
-  undeclared language is a hard deal-breaker if a posting requires it; a declared language at a
-  lower level than a posting wants is flagged for your own judgment, not auto-rejected. See
-  04-job-evaluation.md's Language Gate. -->
-- **CV language:** [YOUR_CV_LANGUAGE] <!-- English unless your market expects otherwise; /setup asks -->
+  | Hausa | Native (mother tongue) |
+  | English | Native |
+  | German | Intermediate (~B1/B2) |
+  | Turkish | Intermediate (~B1/B2) |
+- **CV language:** English by default. Switch to German when the target posting is primarily in German, mirroring how cover letters already auto-match the posting's language - confirm with the user per application if unsure. <!-- User asked for a "mix" of English and German rather than one fixed language; this is the working interpretation until refined. -->
 
-- **Status:** [YOUR_EMPLOYMENT_STATUS]
-- **LinkedIn headline:** "[YOUR_LINKEDIN_HEADLINE]"
+- **Status:** Master's student in Germany, funded by the DAAD Nigerian-German Postgraduate Training Programme (2025) and the PTDF Master's Overseas Scholarship (2023). **[UNCONFIRMED: exact Master's program, field, and institution not yet provided - likely FH Münster's Steinfurt campus given the home address, but do not state this as fact until confirmed. Ask the user before naming a specific program/institution in any CV or cover letter.]**
+- **LinkedIn headline:** "[UNCONFIRMED - not yet captured from the user or their LinkedIn profile]"
 
 ### Education
-<!-- List your degrees, most recent first -->
-- **[DEGREE_LEVEL] in [FIELD]** ([YEAR_START]-[YEAR_END]) - [INSTITUTION]
-  - Thesis: "[THESIS_TITLE]"
-  - Topics: [KEY_TOPICS]
+- **Bachelor of Physics** (completed 2021) - Ahmadu Bello University, Zaria, Nigeria
+  - Grade: 2.1 (Top 5%)
+  - Thesis: "Evaluation of Surface Absorption Rate of Mobile Phones Used within Ahmadu Bello University Community"
+  - Topics: Electromagnetic radiation measurement, power density and SAR evaluation methodology, research proposal writing, literature review, data analysis and presentation
+- **Master's degree, Germany** (in progress) - **[UNCONFIRMED program/institution/field - see Identity note above]**. Funded by DAAD (Nigerian-German Postgraduate Training Programme, 2025) and PTDF (Master's Overseas Scholarship, 2023).
 
 ### Professional Experience
-<!-- List your roles, most recent first -->
-- **[JOB_TITLE]** ([START_DATE] - [END_DATE]) - **[COMPANY]** ([LOCATION])
-  - [KEY_RESPONSIBILITY_1]
-  - [KEY_RESPONSIBILITY_2]
-  - [KEY_ACHIEVEMENT]
+- **Teaching Assistant (and Hostel Custodian)** (03/2023 - 04/2025) - **Nigerian Tulip International Colleges** (Yobe State, Nigeria)
+  - Took custody of the hostel's engineering utility and students' safety and wellbeing
+  - Voluntarily coached students in classes
+  - Coordinated and participated in physics laboratory training and lectures
+- **Technical Assistant** (04/2022 - 03/2023) - **Yola Electricity Distribution Company** (Taraba State, Nigeria)
+  - Assisted in coordinating enumeration
+  - Participated in inspections of power lines and transformers across different service centers
+- **Intern (Industrial Training)** (07/2018 - 12/2018) - **Equipment Maintenance and Development Center, ABU Zaria** (Kaduna State, Nigeria)
+  - Worked in a team to build and maintain electrical appliances
+  - Participated in building project prototypes, network circuit construction, and testing
 
 ### Technical Skills
-- **Primary:** [YOUR_PRIMARY_SKILLS]
-- **Secondary:** [YOUR_SECONDARY_SKILLS]
-- **Domain:** [YOUR_DOMAIN_EXPERTISE]
-- **Software:** [YOUR_TOOLS_AND_SOFTWARE]
+- **Primary:** Python, Google Colab
+- **Secondary:** Windows, MS Office Suite, Google Workspace tools, ChatGPT
+- **Domain:** Applied physics, electromagnetic radiation / SAR measurement methodology, physics laboratory instruction and demonstration
+- **Software:** Windows, MS Office Suite, Google tools, ChatGPT
 
-### Certifications
-<!-- List relevant certifications with dates -->
-- **[CERTIFICATION_NAME]** - [HOURS]h - completed [DATE]
+### Independent Projects
+- **Evaluation of Surface Absorption Rate of Mobile Phones Used within Ahmadu Bello University Community** (2021, Lead Investigator): Measured power density and evaluated the SAR of sample phones at varying distances from the human body; determined whether emitted SAR exceeded the maximum permissible exposure limit. Conceptualized the research idea, reviewed the literature, wrote the research proposal, collected and analyzed the data, and presented the findings. Undergraduate thesis project, Ahmadu Bello University.
+
+### Certifications / Training
+- **Research Methodology and Scientific Writing** - Maryam Abacha American University of Nigeria (virtual), 2025
+- **"The Dirty Dielectrics: Imagine a world of electricity without it"** (seminar) - Ahmadu Bello University Zaria, 2024
 
 ### Publications
-<!-- List peer-reviewed publications, if any -->
-- [AUTHOR_LIST] ([YEAR]). [TITLE]. [JOURNAL].
+None yet.
 
 ### Awards
-<!-- List relevant awards, hackathons, competitions -->
-- [AWARD_NAME] - [EVENT] ([YEAR])
+- Nigerian-German Postgraduate Training Programme - German Academic Exchange Service (DAAD), 2025
+- Master's Overseas Scholarship - Petroleum Technology Development Fund (PTDF), 2023
+
+### Volunteering
+- **NEAR Foundation Program** (07/2020 - 2021, Zaria): Online tutoring of high school students, medical and hunger outreach, mentoring on career prospects
+- **Tutor, Gangare Foundation Refresher Course Training** (2018 - 2021, Zaria): Tutored and guided over 80 high school students for university entrance examinations; more than 40 successfully gained admission into various Nigerian universities
+
+### Communication and Interpersonal Roles
+- Personal assistant to the president, NAPS-ABU Chapter
+- Senator, PLA NAPS-ABU Chapter
+- Director of education, FMPS ABU Zaria
 
 ### Behavioral Profile
-<!-- Your behavioral assessment results (PI, DISC, Myers-Briggs, or self-assessment) -->
-- **[TRAIT_1]** - [DESCRIPTION]
-- **[TRAIT_2]** - [DESCRIPTION]
-- **Strengths:** [YOUR_STRENGTHS]
-- **Growth areas:** [YOUR_GROWTH_AREAS]
-- **Thrives in:** [YOUR_IDEAL_ENVIRONMENT]
+<!-- Deferred at the user's request during /setup. Run /setup --section behavioral to complete this. -->
+Not yet captured. Do not assume a behavioral profile when evaluating culture fit (Dimension 3 in 04-job-evaluation.md) - note it as "not assessed" rather than guessing.
 
 ### What Excites You
-<!-- What motivates you professionally -->
-- [PASSION_1]
-- [PASSION_2]
+- Hands-on physics research and measurement work (grounded in the SAR/electromagnetic radiation thesis project)
+- Teaching, mentoring, and lab instruction (two years as a physics teaching assistant, plus several years of volunteer tutoring)
+- **[Further input welcome - ask the user directly if more specificity is needed for a given application]**
 
 ### Target Sectors
-<!-- Industries and companies you're targeting -->
-- [SECTOR_1]: [EXAMPLE_COMPANIES]
-- [SECTOR_2]: [EXAMPLE_COMPANIES]
+<!-- Primary direction is inferred from the werkstudent_digest_2026-08-08.txt scrape the user already reviewed. Confirm/refine with the user over time via /setup --section search. -->
+- **Primary:** Werkstudent / studentische Hilfskraft roles in Photonics, Optics, and Laser technology - e.g. Fraunhofer ILT/HHI, Zeiss, TOPTICA Photonics, Jenoptik, DLR, HENSOLDT
+- **Secondary (adjacent physics/engineering):** X-ray/industrial metrology (Fraunhofer IIS), semiconductor technology, quantum sensing/computing, precision positioning (Physik Instrumente), general R&D Werkstudent roles at photonics-adjacent companies (ARRI, Aixtron)
+- **Note:** the candidate's CV does not yet show direct photonics/optics/laser lab experience - the primary domain argument rests on the physics degree, the EM-radiation-measurement thesis, and (once confirmed) the German Master's program. Flag this transfer explicitly in profile statements rather than overstating direct experience.
 
 ### Deal-breakers
-<!-- Hard constraints on job search. Language requirements are handled separately and
-automatically from your Languages table above - don't duplicate them here. -->
-- [DEALBREAKER_1]
-- [DEALBREAKER_2]
+<!-- Language requirements are handled separately and automatically from your Languages table above - don't duplicate them here. -->
+- **[UNCONFIRMED - not yet provided by the user beyond the Language Gate. Ask directly before excluding postings on any other basis.]**
 
 ## Repo Structure
 - `cv/` - LaTeX CV variants (moderncv template, banking style)

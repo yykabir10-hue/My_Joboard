@@ -20,7 +20,7 @@ Primary (German job boards, all covered by an installed CLI or MCP tool — no `
 - **arbeitsagentur.de** - the federal employment agency's official job board, Germany's largest job database; `arbeitsagentur-search` CLI (official public API — **start here**)
 - **stepstone.de** - one of Germany's largest general job boards; `stepstone-search` CLI
 - **xing.com/jobs** - DACH professional network; `xing-search` CLI (personal-use only, see its SKILL.md)
-- **arbeitnow.com** - installed but **not used for this search**: probed with `Verfahrensingenieur`, `Process Engineer` and `Werkstudent Verfahrenstechnik` it returned 0 results every time. It is a tech/remote board and carries nothing for process engineering.
+- **arbeitnow.com** - installed but **disabled by default** (see `job_scraper/search-profiles.json`'s `_comment`): a prior probe with process-engineering queries returned 0 results every time on a tech/remote board. Not yet re-probed with photonics/Werkstudent queries - worth testing before assuming it carries nothing for this field either.
 - **linkedin.com/jobs** - filter to Germany / a German city; `linkedin-search` CLI (personal-use only)
 - **indeed.com/de** (or `de.indeed.com`) - reached via the connected Indeed MCP tool (`country_code: "DE"`), not a CLI — see `job-scraper/SKILL.md` Step 1b.5
 - **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field, e.g. `get-in-it.de` (IT), `honeypot.io` (tech) (optional — scaffold with `/add-portal`)
@@ -32,59 +32,52 @@ Secondary (company career pages / broad discovery via WebSearch):
 
 Queries are grouped by priority. Write **each category in every language from your Languages table** (see Language scope above). Combine each query with your location terms (e.g. your city, region, or metro area) where the site supports it.
 
-### Priority 1: Process / chemical engineering roles
+### Priority 1: Photonics / Optics / Laser Werkstudent roles
 
-Core title phrasings, taken from live German postings (see `job_scraper/search-profiles.json`).
-
-```
-site:stepstone.de "Verfahrensingenieur" OR "Prozessingenieur"
-site:xing.com/jobs "Chemieingenieur"
-site:indeed.com/de "Verfahrensingenieur (m/w/d)"
-site:linkedin.com/jobs "Process Engineer" Germany
-"Verfahrenstechniker" Stellenangebote Deutschland
-```
-
-### Priority 2: Simulation and process design
+Core title phrasings, taken from the werkstudent_digest_2026-08-08.txt scrape already reviewed and mirrored into `job_scraper/search-profiles.json`. Student/Werkstudent/Hilfskraft roles are the **target** here, not noise - do not filter them out.
 
 ```
-"Prozesssimulation" OR "Process Simulation" Stellenangebote
-"Massen- und Energiebilanzen" Verfahrenstechnik
-"Aspen Plus" OR "Prozess-Simulationssoftware" Stellenangebote
-site:linkedin.com/jobs "Process Design & Optimization" Germany
+"Werkstudent Photonik" OR "Werkstudent*in Photonik"
+"Werkstudent Optik" OR "Werkstudent*in Optik"
+"Werkstudent Laser" OR "Werkstudent*in Laser"
+"Studentische Hilfskraft" Photonik OR Laser OR Optik
+site:stepstone.de "Werkstudent" Photonik OR Optik OR Laser
+site:xing.com/jobs "Werkstudent" Photonik OR Optik OR Laser
+site:linkedin.com/jobs "Werkstudent" Photonics OR Optics OR Laser Germany
+"Praktikum" Photonik OR Optik OR Laser Deutschland
+"Bachelorarbeit" OR "Masterarbeit" Photonik OR Laser OR Optoelektronik
 ```
 
-### Priority 3: Werkstudent / Praktikum / Abschlussarbeit
+### Priority 2: Photonics-adjacent physics/engineering Werkstudent roles
 
-Student and thesis roles are targets, not noise - do **not** filter these out.
-
-```
-"Werkstudent Verfahrenstechnik" OR "Werkstudent*in Energietechnik"
-"Praktikum Verfahrenstechnik" OR "Pflichtpraktikum" Verfahrenstechnik
-"Praktikum/Abschlussarbeit" Verfahrenstechnik OR Energietechnik
-site:stepstone.de Werkstudent Verfahrenstechnik
-```
-
-### Priority 4: Domain specialisations
-
-Gas processing, thermal separation, and energy transition.
+Secondary net per CLAUDE.md's Target Sectors - X-ray/industrial metrology, semiconductor, quantum, precision positioning, general photonics-company R&D.
 
 ```
-"Biogasaufbereitung" OR "Gasreinigungsanlagen" Stellenangebote
-"CO2-Verflüssigung" OR "Verfahrensfließbild" OR "R&I Fließbild"
-"Destillation" OR "Rektifikation" Verfahrensingenieur
-"Trenntechnik" OR "Wärmetauscher" OR "Lösungsmittelrückgewinnung"
-"HAZOP" OR "DGRL" OR "ATEX" OR "DVGW" OR "AD2000" Ingenieur
-"Erneuerbare Energien" OR "Energiewende" Ingenieur
+"Werkstudent" Röntgentechnik OR "Industrielle Röntgentechnik"
+"Werkstudent" Halbleitertechnik OR Quantum OR "Quantum Computing"
+"Werkstudent" Nanopositionierung OR "Precision Positioning"
+site:xing.com/jobs "Werkstudent" Elektrotechnik Fraunhofer
+"Working Student" Photonics OR Quantum Germany
+```
+
+### Priority 3: Company-specific discovery (WebSearch fallback)
+
+Companies that recur across the digest as strong-fit employers - use when a CLI portal degrades or to catch roles not yet indexed by the CLIs above.
+
+```
+site:careers.zeiss.com Werkstudent
+site:jenoptik.com Werkstudent OR careers
+site:toptica.com career Werkstudent OR Praktikant
+site:jobs.dlr.de Werkstudent Photonik OR Laser OR Optik
+"Fraunhofer" "Studentische Hilfskraft" Photonik OR Laser
 ```
 
 ## Location Filter
 
-When evaluating results, verify the job location is within reasonable commute distance from your home. Define acceptable areas:
-- [YOUR_CITY] and surrounding areas
-- [ACCEPTABLE_AREA_1]
-- [ACCEPTABLE_AREA_2]
-- [BORDERLINE_AREA] (borderline - ~X min by transit)
-- [TOO_FAR_AREA] (too far)
+Nationwide search, per the user's explicit preference during `/setup` (willing to relocate/commute for the right role) - matches the scope already used in `job_scraper/search-profiles.json` and the digest already reviewed.
+- Steinfurt, NRW (home base) and surrounding areas
+- Nationwide Germany - no location filter applied by default (mirrors the digest's coverage of Aachen, Berlin, Stuttgart, Munich, and elsewhere)
+- Re-run `/setup --section search` to switch to a commutable-region-only filter if this becomes too broad in practice
 
 ## Language Filter
 

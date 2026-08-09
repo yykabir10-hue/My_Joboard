@@ -60,9 +60,9 @@ How well do the required/preferred skills align with the candidate's capabilitie
 | 40-59 | Partial match, significant upskilling needed |
 | 0-39 | Fundamental mismatch |
 
-**Strong match areas:** [YOUR_PRIMARY_SKILLS]
-**Moderate match areas:** [YOUR_SECONDARY_SKILLS]
-**Weak match areas:** [SKILLS_YOU_LACK]
+**Strong match areas:** Applied physics fundamentals, electromagnetic radiation measurement methodology (SAR/power density), Python (Google Colab), physics laboratory instruction/demonstration
+**Moderate match areas:** Electrical/electronic systems (appliance maintenance, power line/transformer inspection, circuit construction and testing), research proposal writing and data analysis, MS Office/Google tools
+**Weak match areas:** Direct hands-on photonics/optics/laser lab experience (no laser systems, optical benches, or photonic device work on the CV yet - domain link currently runs through physics fundamentals and EM-radiation research, not laser-specific tooling); ML/AI frameworks beyond basic Python+Colab; German-language technical work at native/C-level
 
 ### 2. Experience Match (0-100)
 Does work history align with what they're looking for?
@@ -74,9 +74,9 @@ Does work history align with what they're looking for?
 | 40-59 | Adjacent experience, would need to make the case |
 | 0-39 | Unrelated experience |
 
-**Strong:** [YOUR_DIRECT_EXPERIENCE_DOMAINS]
-**Moderate:** [YOUR_ADJACENT_EXPERIENCE]
-**Entry-level:** [ROLES_WITH_LIMITED_EXPERIENCE]
+**Strong:** Physics laboratory training/instruction (2 years); independent experimental research (SAR thesis project - proposal, data collection, analysis, presentation)
+**Moderate:** Electrical/electronic maintenance and inspection work (appliance builds, power line/transformer inspection, circuit construction and testing); teaching and mentoring (80+ students tutored across two volunteer programs)
+**Entry-level:** Photonics/optics/laser-specific roles (Werkstudent/Hilfskraft level is the honest entry point - the candidate is a physics graduate and current Master's student, not yet a practitioner in this specific subfield)
 
 ### 3. Behavioral/Culture Fit (0-100)
 Does the role and company culture match the behavioral profile?
@@ -107,19 +107,21 @@ Does this role advance career goals and contain tasks that energize?
 | 0-39 | Dead end or backwards step |
 
 **Career goals:**
-- [YOUR_CAREER_GOAL_1]
-- [YOUR_CAREER_GOAL_2]
-- [YOUR_CAREER_GOAL_3]
+- Build hands-on photonics/optics/laser lab experience during the Master's to convert physics fundamentals into a concrete specialization
+- Gain German industry/research-institute experience (Fraunhofer, Zeiss, DLR-tier organizations) to strengthen post-Master's employability in Germany
+- Continue combining technical/research work with teaching or mentoring where possible, consistent with two years as a physics teaching assistant plus years of volunteer tutoring
+
+**[UNCONFIRMED - the above is inferred from the CV and the werkstudent_digest_2026-08-08.txt scrape, not stated directly by the user. Confirm or refine with the user, especially once the Master's program/institution is known.]**
 
 **Motivation filter:** Evaluate not just whether you *can* do the tasks, but whether the tasks will *energize* you. Consider:
-- Tasks that energize: [YOUR_ENERGIZING_TASKS]
-- Tasks that drain: [YOUR_DRAINING_TASKS]
+- Tasks that energize: hands-on lab/experimental work, measurement and data analysis, teaching or explaining physics concepts to others
+- Tasks that drain: **[UNCONFIRMED - not yet provided, ask the user directly rather than guessing]**
 - Non-task factors: leadership style, department culture, company values, degree of autonomy
 
 **Life situation alignment:** Consider personal constraints:
-- **Security**: [YOUR_FINANCIAL_SITUATION_CONTEXT]
-- **Flexibility**: [YOUR_SCHEDULE_CONSTRAINTS]
-- **Professional development**: [YOUR_GROWTH_PRIORITIES]
+- **Security**: Student visa/permit likely caps working hours during term (standard for international students in Germany) - **verify the specific cap and any term-time/vacation distinction with the user before scoring roles on hours**, per the Eligibility Gate above
+- **Flexibility**: Nationwide search is acceptable per the user (willing to relocate/commute); no other schedule constraints confirmed yet
+- **Professional development**: Photonics/optics/laser specialization is the primary stated direction (from the digest already reviewed); open to adjacent physics/engineering Werkstudent roles as a secondary tier
 
 ### 6. Salary Benchmark (Optional)
 

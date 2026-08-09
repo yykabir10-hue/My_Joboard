@@ -16,28 +16,28 @@ Keep answers to 1-2 minutes. Be specific. End with what you learned or would do 
 
 <!-- These are populated by /setup from your actual experience. Below are templates showing the format. -->
 
-### 1. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT - what was happening, what was the problem]
-**T:** [YOUR RESPONSIBILITY - what you specifically needed to do]
-**A:** [WHAT YOU DID - specific actions, tools, methods]
-**R:** [OUTCOME - measurable results, adoption, impact]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 1. SAR Evaluation of Mobile Phones (Independent Research / Electromagnetic Measurement)
+**S:** As a final-year physics undergraduate at Ahmadu Bello University, there was no existing local data on whether mobile phones commonly used on campus emitted specific absorption rates (SAR) within permissible safety limits.
+**T:** As lead investigator, design and execute a study measuring power density and SAR of sample phones at varying distances from the human body, and determine whether emitted SAR exceeded the maximum permissible exposure limit.
+**A:** Conceptualized the research question, reviewed the relevant literature, wrote the research proposal, collected and analyzed measurement data across sample devices and distances, then presented the findings.
+**R:** Completed thesis achieved a 2.1 (Top 5% of cohort) grade; produced one of the only campus-specific SAR datasets for ABU's community.
+**Use for:** "Tell me about a research project you led", "Describe a time you had to learn something technical independently", "How do you approach a problem with no existing local data?"
 
-### 2. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT]
-**T:** [YOUR RESPONSIBILITY]
-**A:** [WHAT YOU DID]
-**R:** [OUTCOME]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 2. Physics Laboratory Instruction (Teaching Assistant, Nigerian Tulip International Colleges)
+**S:** As Teaching Assistant over two years, was responsible for physics laboratory training and lectures for students, alongside custody of hostel engineering utilities and student safety/wellbeing.
+**T:** Deliver consistent, safe, and effective physics lab instruction while also handling a facilities/safety responsibility outside the classroom.
+**A:** Coordinated and personally ran physics laboratory sessions and lectures; voluntarily coached students outside scheduled classes; managed hostel engineering utility upkeep and student safety concerns in parallel.
+**R:** Two years of sustained lab instruction and facilities responsibility with no safety incidents reported on the CV; direct, transferable evidence of careful, safety-conscious bench work relevant to any laser/optics lab environment.
+**Use for:** "Describe your experience with hands-on lab work", "Tell me about a time you balanced multiple responsibilities", "How do you approach safety in a technical environment?"
 
-### 3. [PROJECT_NAME] ([SKILL_DEMONSTRATED])
-**S:** [CONTEXT]
-**T:** [YOUR RESPONSIBILITY]
-**A:** [WHAT YOU DID]
-**R:** [OUTCOME]
-**Use for:** "[QUESTION_TYPE_1]", "[QUESTION_TYPE_2]"
+### 3. Tutoring 80+ Students for University Entrance Exams (Gangare Foundation Refresher Course)
+**S:** Over three years (2018-2021) alongside studies, volunteered as a tutor preparing high school students in Zaria for Nigerian university entrance examinations.
+**T:** Guide over 80 students through exam preparation with no formal teaching credential, purely on subject mastery and volunteer commitment.
+**A:** Tutored and guided the students consistently over the multi-year program, adapting explanations to a wide range of ability levels.
+**R:** More than 40 of the 80+ students tutored successfully gained admission into various Nigerian universities - a ~50% admission conversion rate from the tutoring cohort.
+**Use for:** "Tell me about a time you mentored someone", "Describe your communication style when explaining technical material", "Why does teaching/mentoring matter to you?"
 
-<!-- Add more STAR examples as needed. Aim for 4-6 covering different competencies. -->
+<!-- Add more STAR examples as needed. Aim for 4-6 covering different competencies. A 4th example (Technical Assistant role at Yola Electricity Distribution Company, covering practical electrical/electronics inspection work) could be added once more specific incidents/outcomes from that role are available - ask the user if a concrete story from that period would strengthen interview prep. -->
 
 ## Common Tough Questions
 
