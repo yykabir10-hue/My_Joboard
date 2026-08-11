@@ -258,6 +258,28 @@ def excluded(title, terms):
     return any(dedup_jobs.normalize_title(term) in haystack for term in terms)
 
 
+def relevant(title, terms):
+    """Keep only titles that actually mention the profile's target domain.
+
+    `exclude_titles` above is a blocklist for known-bad patterns. This is the
+    complementary allowlist, and it exists because portals do not reliably
+    AND-match a multi-word query: a live probe of "Werkstudent Photonik"
+    against StepStone returned "ALDI Nord - Werkstudent (m/w/d)" as its first
+    four results, ignoring "Photonik" almost entirely, while the same query
+    against arbeitsagentur and xing came back on-topic. A profile with
+    `require_any` set keeps only titles containing at least one of those
+    terms; a profile with none set (the field is optional) keeps everything,
+    same as before this filter existed.
+
+    Compared on the normalized title, like `excluded`, so umlauts,
+    punctuation, and gender markers cannot dodge the match either.
+    """
+    if not terms:
+        return True
+    haystack = dedup_jobs.normalize_title(title or "")
+    return any(dedup_jobs.normalize_title(term) in haystack for term in terms)
+
+
 def run(config, only=None, dry_run=False, timeout=120):
     defaults = config.get("defaults", {})
     records, report = [], []
@@ -305,7 +327,8 @@ def run(config, only=None, dry_run=False, timeout=120):
 
             found = dedup_jobs.extract_records(payload, portal)
             kept = [r for r in found
-                    if not excluded(r.get("title"), profile.get("exclude_titles"))]
+                    if not excluded(r.get("title"), profile.get("exclude_titles"))
+                    and relevant(r.get("title"), profile.get("require_any"))]
             for record in kept:
                 record["profile"] = profile["id"]
             records.extend(kept)

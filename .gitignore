@@ -31,6 +31,10 @@ salary_data.json
 **/job_scraper/pools/
 **/job_scraper/logs/
 **/job_scraper/*.md
+**/job_scraper/*.db
+**/job_scraper/*.db-journal
+**/job_scraper/*.db-wal
+**/job_scraper/*.db-shm
 *_BehavioralReport.pdf
 linkedin_Profile.pdf
 

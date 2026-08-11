@@ -79,6 +79,10 @@ else
   exit 1
 fi
 
+# Keep job_scraper/jobs.db queryable across days. Non-fatal: a DB write
+# failure must never take down the digest that was already sent above.
+python3 tools/pool_to_sqlite.py || echo "WARNING: sqlite ingest failed (non-fatal)"
+
 # Keep a month of logs and pools; unbounded growth in a daily job is a slow leak.
 find "$LOG_DIR" -name '*.log' -mtime +30 -delete 2>/dev/null || true
 find "$LOG_DIR" -name '*.html' -mtime +30 -delete 2>/dev/null || true

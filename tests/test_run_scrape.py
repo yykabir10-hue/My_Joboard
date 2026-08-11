@@ -203,6 +203,33 @@ class ExcludeTitles(unittest.TestCase):
         self.assertFalse(run_scrape.excluded(None, ["werkstudent"]))
 
 
+class RequireAny(unittest.TestCase):
+    def test_plain_match(self):
+        self.assertTrue(run_scrape.relevant("Werkstudent Photonik (m/w/d)", ["photonik"]))
+
+    def test_case_and_umlaut_insensitive(self):
+        self.assertTrue(run_scrape.relevant("WERKSTUDENT ROENTGENTECHNIK", ["röntgen"]))
+
+    def test_survives_gender_markers(self):
+        self.assertTrue(
+            run_scrape.relevant("Werkstudent*in Laseroptik", ["laser"]))
+
+    def test_off_topic_title_is_dropped(self):
+        # The exact failure mode this filter exists for: StepStone returning
+        # "ALDI Nord - Werkstudent (m/w/d)" for a query of "Werkstudent Photonik".
+        self.assertFalse(run_scrape.relevant("Werkstudent (m/w/d)", ["photonik"]))
+
+    def test_any_of_several_terms_matches(self):
+        self.assertTrue(run_scrape.relevant("Praktikum Optik/Laser", ["photonik", "laser"]))
+
+    def test_no_terms_keeps_everything(self):
+        self.assertTrue(run_scrape.relevant("Werkstudent Vertrieb", []))
+        self.assertTrue(run_scrape.relevant("Werkstudent Vertrieb", None))
+
+    def test_missing_title_is_dropped_when_terms_required(self):
+        self.assertFalse(run_scrape.relevant(None, ["photonik"]))
+
+
 class PortalEnabled(unittest.TestCase):
     def test_reads_the_frontmatter_toggle(self):
         self.assertTrue(run_scrape.portal_enabled("arbeitsagentur-search"))
@@ -295,6 +322,32 @@ class Run(unittest.TestCase):
         self.assertEqual(records[0]["profile"], "on")
         entry = [e for e in report if e["profile"] == "on"][0]
         self.assertEqual((entry["returned"], entry["kept"]), (2, 1))
+
+    def test_require_any_drops_off_topic_results_from_a_loose_portal(self):
+        config = {
+            "defaults": {"jobage": 3, "limit": 5, "portals": ["arbeitsagentur-search"]},
+            "profiles": [
+                {"id": "photonik", "query": "Werkstudent Photonik",
+                 "require_any": ["photonik", "photonic"]},
+            ],
+        }
+        payload = {"results": [
+            # The exact real-world failure mode: StepStone returning a
+            # totally unrelated "Werkstudent" posting for a Photonik query.
+            {"title": "Werkstudent (m/w/d)", "company": "ALDI Nord", "url": "1"},
+            {"title": "Werkstudent*in Photonik, Sensorik", "company": "Fraunhofer HHI", "url": "2"},
+        ]}
+        with mock.patch.object(run_scrape, "run_portal", return_value=(payload, None)):
+            records, report = run_scrape.run(config)
+        self.assertEqual([r["company"] for r in records], ["Fraunhofer HHI"])
+        entry = report[0]
+        self.assertEqual((entry["returned"], entry["kept"]), (2, 1))
+
+    def test_no_require_any_keeps_prior_behaviour(self):
+        payload = {"results": [{"title": "Anything Goes", "company": "A", "url": "1"}]}
+        with mock.patch.object(run_scrape, "run_portal", return_value=(payload, None)):
+            records, _ = run_scrape.run(self.config)
+        self.assertEqual([r["title"] for r in records], ["Anything Goes"])
 
     def test_a_failing_portal_does_not_abort_the_run(self):
         with mock.patch.object(run_scrape, "run_portal", return_value=(None, "boom")):
