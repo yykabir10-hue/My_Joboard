@@ -97,6 +97,14 @@ jobs:
           path: job_scraper/logs/*.html
           retention-days: 7
 
+      - name: Upload today's raw pool (portal-level detail for debugging)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scrape-pool-${{ steps.date.outputs.date }}
+          path: job_scraper/pools/${{ steps.date.outputs.date }}.json
+          retention-days: 14
+
       - name: Prune pools older than 30 days (before the cache is saved back)
         if: always()
         run: find job_scraper/pools -name '*.json' -mtime +30 -delete || true
